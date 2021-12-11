@@ -2,7 +2,7 @@
 // Created by Sandrino Becirbegovic on 11.12.21.
 //
 
-#pragma once;
+#pragma once
 
 
 #include <cmath>
