@@ -9,7 +9,12 @@ color ray_color(const Ray& r)
 {
     Vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5*(unit_direction.y() + 1.0);
-    return (1.0-t)*color(1.0, 1.0, 1.0) + t*color(0.5, 0.7, 1.0);
+    // If t == 1 we get end_value
+    // If t == 0 we get start_value
+    // The scaling of t is based on the y value of the unit vector
+    auto start_value {color(1.0, 1.0, 1.0)};
+    auto end_value{color(0.5, 0.7, 1.0)};
+    return (1.0-t) * start_value + t * end_value;
 }
 
 int main()
@@ -39,6 +44,9 @@ int main()
         {
             auto u = double(i) / (image_width-1);
             auto v = double(j) / (image_height-1);
+
+            // Could delete " - origin"
+            // If the origin is 0,0,0 then any point on the map is == the vector
             Ray r(origin, lower_left_corner + u*horizontal + v*vertical - origin);
             color pixel_color = ray_color(r);
             write_color(std::cout, pixel_color);
